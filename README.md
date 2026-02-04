@@ -1,5 +1,4 @@
-# Jin Woo Hunter - Universal CMS & Framework Credentials and Keys Hunter (Complete User Guide)
-
+# Jin Woo Hunter - Universal CMS & Framework Credentials and Keys Hunter
 ## What Is This Tool?
 
 **Jin Woo Hunter** is an automated credential scanner that finds exposed sensitive information on websites. It checks for:
