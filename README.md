@@ -171,7 +171,7 @@ abc123def456...  (2Captcha)
 ```
 
 **What It Finds**:
-- Stripe keys (live AND test)
+- Stripe Keys (Live)
 - PayPal Client ID + Secret
 - Razorpay Key + Secret
 - And complete key pairs for all providers
