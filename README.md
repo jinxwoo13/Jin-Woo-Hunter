@@ -1,10 +1,12 @@
-# Jin Woo Hunter - Universal CMS & Framework Credentials and Keys Hunter
+# Jin Woo Hunter - Universal CMS & Framework Credentials and Keys Hunter (Complete User Guide)
+
 ## What Is This Tool?
 
 **Jin Woo Hunter** is an automated credential scanner that finds exposed sensitive information on websites. It checks for:
-- 📧 **SMTP credentials** (email servers)
+- 📧 **SMTP Credentials** (email servers)
 - ☁️ **AWS keys** (cloud service credentials)
-- 🗄️ **Database credentials** (MySQL, PostgreSQL, etc.)
+- 🗄️ **Database** (MySQL, PostgreSQL, etc.)
+- 💬 **SMS Keys** - (Twilio, Nexmo, 5sim, etc.) 
 - 🔑 **API keys** (SendGrid, OpenAI, payment gateways, etc.)
 - 💳 **Payment gateway keys** (Stripe, PayPal, Razorpay, etc.)
 
@@ -15,142 +17,92 @@ The scanner checks websites for exposed `.env` files and other configuration fil
 - 🛡️ **Proxy support** (hide your IP)
 - 🔄 **Automatic retries** (bypasses temporary blocks)
 - 🚀 **Multi-threading** (scans faster)
+- 💾 **Auto-Saving Sessions** (separately for each mode)
 
 ---
 
-## Three Scan Modes
+## Two Scan Modes
 
-### Option 1: Regular Scan (SMTP Only - Fast)
+### Option 1: Deep Scan (All Credentials - Thorough)
 
-**Purpose**: Quickly find SMTP email credentials
+**Purpose**: The ultimate scan mode using revolutionary 3-Phase scanning. Finds **EVERYTHING** including SMTP, Database, AWS, API keys, and MORE.
 
-**What It Scans For**: SMTP server credentials only
+**🎯 How It Works - 3-Phase System**:
 
-**Paths Checked**: 100+ paths including:
+**Phase 1: ENV & Config Scanning (Fast Path)**
+**Phase 2: Deep Key Discovery (Comprehensive)**
+**Phase 3: Advanced Fallback (Thorough)**
+
+**📊 Live Progress Indicators**:
 ```
-/.env
-/.env.backup
-/.env.production
-/.env.dev
-/.env.local
-/.env.old
-... and 90+ more variations
+[CHECKING] http://example.com
+[PHASE 1] ENV scanning...
+[ENV-FILE] http://example.com/.env
+[ENV-EXTRACT] Extracting all credentials...
+[AWS-CHECK] Validating AKIA...
+[PHASE 2] Scanning Keys, JS, and Directories...
+[JS-SCAN] Found 5 JS files to scan
+[DIR-SCAN] Scanning directories...
+[PHASE 3] Deep Fallback Analysis...
+[CRAWLER] Crawling http://example.com (depth=2)...
+[DB-DUMPS] Scanning for database dumps...
+[VULN-SCAN] Checking for vulnerabilities...
 ```
-
-**What It Finds**:
-- Mail host
-- Mail port  
-- Username
-- Password
-- From address
-
-**Output File**: `Results/Random_SMTPS.txt`
-
-**Format**:
-```
-mailhost|port|username|password
-```
-
-**Example**:
-```
-smtp.gmail.com|587|user@gmail.com|mypassword123
-```
-
-**Telegram Notification**:
-```
-🔍 SMTP Found
-🌐 Host: smtp.gmail.com
-🔌 Port: 587
-📧 Email: user@gmail.com
-🔐 Password: mypassword123
-```
-
-**Use Case**: When you only need email credentials quickly
-
----
-
-### Option 2: Deep Scan (Everything - Thorough)
-
-**Purpose**: Find ALL types of credentials and API keys
 
 **What It Scans For**:
-- ☁️ AWS credentials
-- 🗄️ Database credentials  
-- 🔑 Email API keys (SendGrid, Mailgun, Brevo, etc.)
-- 🤖 AI API keys (OpenAI, Gemini, Anthropic, etc.)
-- 🧩 Captcha service keys (2Captcha, CapMonster, etc.)
-- 📡 Other API keys (Twilio, Telegram bots, etc.)
+- 📧 **SMTP Credentials** (Gmail, Office365, SendGrid, etc.)
+- ☁️ **AWS Credentials** (Access Key + Secret + SES SMTP)
+- 🗄️ **Database Credentials** (MySQL, Postgres, etc. with all fields)
+- 🔑 **Email API Keys** (SendGrid, Mailgun, Brevo, Postmark, etc.)
+- 🤖 **AI API Keys** (OpenAI, Gemini, Anthropic, Claude)
+- 🧩 **Captcha Keys** (2Captcha, CapMonster, AntiCaptcha, Capsolver)
+- 💬 **SMS Keys** (Twilio, Vonage, 5sim, SMS-Activate, Nexmo)
 
-**Paths Checked**: Same 100+ paths as Regular Scan
+**Paths Checked**: 300+ paths including:
+```
+/.env, /.env.backup, /.env.production, /.env.local
+/config.php, /config.json, /web.config
+/wp-config.php, /database.php
+JavaScript files (automatically extracted)
+/admin/, /phpmyadmin/, /cpanel/
+/database.sql, /dump.sql, /backup.zip
+... and 290+ more
+```
 
-**How It Works**:
-1. Checks `/.env` first (GET request)
-2. If not found, tries POST exploit
-3. If still not found, scans all 100+ paths
-4. For each `.env` found, scans the content AND JavaScript files
+**Output Files (Organized Folders)**:
 
-**Output Files**:
+**SMTP Credentials** → `Results/SMTP/{provider}.txt`
+- `Results/SMTP/gmail.txt`
+- `Results/SMTP/office.txt`
+- `Results/SMTP/sendgrid.txt`
+- `Results/SMTP/random_smtps.txt` (for others)
 
 **AWS Credentials** → `Results/AWS/{region}.txt`
 ```
 URL: http://example.com/.env
-ACCESS_KEY: AKIAIOSFODNN7EXAMPLE
-SECRET_KEY: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+ACCESS_KEY: AKIA...
+SECRET_KEY: wJalr...
 REGION: us-east-1
 ```
 
-**Database Credentials** → `Results/DATABASE/DATABASE.txt`
+**Database Credentials** →  `Results/DATABASE/database.txt`
 ```
-URL: http://example.com/.env
-DB_HOST: db.example.com
+URL: http://74.208.223.14/.env
+DB_HOST: db5014281989.hosting-data.io
 DB_PORT: 3306
-DB_NAME: production_db
-DB_USER: admin
-DB_PASS: secretpassword
+DB_NAME: dbs11883978
+DB_USER: dbu1634093
+DB_PASS: S4_DrL-CkL(5G)1963SurF
 ```
-
-**Email API Keys** → `Results/API_KEYS/*.txt`
-```
-URL: http://example.com
-API_KEY: SG.abc123xyz...
-DOMAIN: example.com
-FROM_EMAIL: no-reply@example.com
-```
-
-**AI/Captcha Keys** → `Results/API_KEYS/*.txt`
-```
-sk-proj-abc123...  (OpenAI)
-AIza...  (Google Gemini)
-abc123def456...  (2Captcha)
-```
-
-**Telegram Notifications**:
-```
-☁️ AWS Keys Found
-🔗 URL: http://example.com
-🔑 Key: AKIA...
-🌍 Region: us-east-1
-
-🗄️ Database Found
-🌐 Host: db.example.com
-👤 User: admin
-🔐 Pass: password123
-
-🔑 SendGrid API Found
-🔐 Key: SG.abc...
-🌐 Domain: example.com
-```
-
-**Use Case**: When you want complete credential extraction
 
 ---
 
-### Option 3: Payment Scan (Payment Gateways)
+### Option 2: Payment Merchant Scan
 
-**Purpose**: Find payment gateway credentials
+**Purpose**: Specifically hunt for payment gateway credentials only.
 
 **What It Scans For**: 40+ payment providers including:
-- Stripe
+- Stripe (Live Keys)
 - PayPal
 - Razorpay
 - Square
@@ -160,7 +112,7 @@ abc123def456...  (2Captcha)
 - Checkout.com
 - And 30+ more
 
-**Paths Checked** (10 paths):
+**Paths Checked** (Optimized list):
 ```
 /.env
 /.env.example
@@ -170,61 +122,40 @@ abc123def456...  (2Captcha)
 ```
 
 **What It Finds**:
-- Stripe Keys (Live)
+- Stripe Keys (sk_live_...)
 - PayPal Client ID + Secret
 - Razorpay Key + Secret
-- And complete key pairs for all providers
+- **Smart Filtering**: Automatically skips test/sandbox keys.
 
 **Output Files**: `Results/PAYMENT_KEYS/{provider}.txt`
-
-**Format**:
 ```
 URL: http://example.com/.env
 STRIPE_KEY: sk_live_...
-STRIPE_PUBLISHABLE_KEY: pk_live_...
 ```
 
-**Telegram Notification**:
-```
-💳 Payment Keys Found: 3 Providers
-[Files attached]
-```
+**Use Case**: E-commerce focused hunting.
 
-**Smart Filtering**: Automatically skips test/sandbox keys
+---
 
-**Use Case**: Specifically hunting payment credentials
+## 🆕 What's New in v3.0
+
+### 🎯 3-Phase Scanning System
+### 📊 Live Progress Indicators
+### 🚫 Smart Duplicate Prevention
+### 🧹 Enhanced Fake Key Filtering
+### 💾 Complete .env Extraction
+### 📦 300+ More Scanning Paths
 
 ---
 
 ## Special Features
 
-### Wildcard Detection
+### Separate Sessions
+Each scan mode has its own session file, so you can run them independently without losing progress:
+- **Deep Scan**: Saves to `.jinwoohunter_deep_session`
+- **Payment Scan**: Saves to `.jinwoohunter_payment_session`
 
-**What It Is**: Some misconfigured servers return "200 OK" for ANY URL, even fake ones.
-
-**What The Script Does**:
-1. Tests with a random garbage URL (e.g., `/abc123xyz.php`)
-2. If it returns 200 OK → Site is flagged as "wildcard"
-3. Site is **skipped** (would give false positives)
-4. **Saved to**: `Scan_Logs/wildcard_sites.txt`
-
-**Why Skip?**: Can't tell real files from fake responses
-
-**Can You Retry?**: YES! Use `wildcard_sites.txt` as input later
-
-### HTTP Error Handling
-
-Sites that return errors (403, 404, 500, etc.) are:
-- Printed as `[SKIP]`
-- **Saved to**: `Scan_Logs/wildcard_sites.txt`
-- Can be retried later (might be temporarily blocked)
-
-### Session Resume
-
-If scan is interrupted (Ctrl+C):
-- Progress is **auto-saved**
-- **Next run**: Asked if you want to resume
-- Continues from where it stopped
+If you stop a scan (Ctrl+C), it auto-saves. When you restart with `--restore`, it resumes the correct session for the mode you select.
 
 #### How to Restore
 To resume a saved session, you need to use the `--restore` flag.
@@ -239,15 +170,21 @@ To resume a saved session, you need to use the `--restore` flag.
 "Jin Woo Hunter.exe" --restore
 ```
 
-*Note: Takes you straight to the proxy check and then resumes if a session file is found.*
+### Telegram Notifications (Anti-Spam)
+- **Alerts**: Sent immediately when a key is found.
+- **Documents**: Result files are **queued** and sent in a single batch when:
+  1. The scan completes
+  2. You stop the scan (Ctrl+C)
+  3. The terminal closes
+
+### Wildcard Detection
+Some servers return "200 OK" for everything. The script detects this by checking a random garbage URL. If it returns 200, the site is skipped to prevent false positives and logged to `Scan_Logs/wildcard_sites.txt`.
 
 ### WAF/Firewall Bypass
-
 Built-in bypass techniques:
 ✅ Rotating User-Agents (20+ browsers)
-✅ Referer headers (looks internal)
-✅ Browser fingerprint headers (Sec-Fetch-*, DNT, etc.)
-✅ Proxy rotation (if configured)
+✅ Referer headers (looks like internal traffic)
+✅ Browser fingerprint headers (Sec-Fetch-*, DNT)
 ✅ Auto-retry on 403/429 blocks
 
 ---
@@ -258,9 +195,8 @@ Built-in bypass techniques:
 
 **1. proxies.txt** (Optional but recommended)
 ```
-http://proxy1:port
-http://user:pass@proxy2:port
-socks5://proxy3:port
+http://proxy:port
+http://user:pass@proxy:port
 ```
 
 **2. targets.txt** (Your scan list)
@@ -276,105 +212,24 @@ site3.com
 {chat_id}
 ```
 
-## Tips & Best Practices
-
-### Retrying Blocked Sites
-
-Many sites in `wildcard_sites.txt` might actually work:
-
-**To Retry**:
-1. Copy `Scan_Logs/wildcard_sites.txt` to `retry.txt`
-2. Run scan again using `retry.txt` as input
-3. Use different proxies if available
-4. Try lower thread count
-
-### When To Use Each Mode
-
-**Use Option 1** (Regular) when:
-- You only need SMTP/email credentials
-- Speed is priority
-- Scanning large lists (10,000+ sites)
-
-**Use Option 2** (Deep) when:
-- You want everything
-- Quality over quantity
-- Smaller targeted lists
-
-**Use Option 3** (Payment) when:
-- Specifically hunting payment gateways
-- Need Stripe, PayPal, etc.
-- E-commerce focused
-
-### Improving Success Rate
-
-1. **Use quality proxies** (residential > datacenter)
-2. **Lower thread count** (less aggressive = less blocks)
-3. **Retry failed sites** from `wildcard_sites.txt`
-4. **Run at different times** (avoid rate limits resetting)
-
 ---
 
 ## FAQ
 
+**Q: Why are only 2 modes now?**
+A: The old "Regular Scan" (SMTP only) was merged into **Deep Scan**. Now Deep Scan finds SMTPs *plus* everything else, so you don't need a separate mode.
+
+**Q: Where are my SMTP results?**
+A: Look in `Results/SMTP/` folder. They are now sorted by provider (e.g., `gmail.txt`, `office.txt`).
+
+**Q: Can I run both modes at once?**
+A: Yes! Since they use separate session files, you can run two instances (one Deep, one Payment) and they will save/resume correctly.
+
 **Q: Why are so many sites skipped?**  
-A: Could be:
-- WAF/firewall blocking
-- Site is down
-- Wrong proxy IP
-- Rate limiting
-
-→ **Retry** from `wildcard_sites.txt` later
-
-**Q: No results found, but site looks vulnerable?**  
-A: Try:
-- Manual check with browser
-- Different scan mode
-- Lower thread count
-- Better proxies
-
-**Q: Getting "Connection timeout" errors?**  
-A: Increase timeout values or use better proxies
+A: Likely WAF blocking or dead sites. Check `Scan_Logs/wildcard_sites.txt` and try retrying them later with different proxies.
 
 **Q: Can I scan without proxies?**  
-A: Yes, but your IP will be exposed and might get blocked/rate-limited
-
-**Q: How to add more paths to scan?**  
-A: Edit the script's path list (requires Python knowledge)
-
----
-
-## Output Examples
-
-### Regular Scan Console
-```
-🚀 Regular SMTP Scan
-📊 Targets: 100 | Threads: 10
-
-[SKIP] http://site1.com (HTTP 403)
-🎯 SMTP Found - http://site2.com/.env
-[WILDCARD] http://site3.com (Soft 404)
-🔍 No SMTP - http://site4.com
-```
-
-### Deep Scan Console
-```
-🔍 Deep Scan
-📊 Targets: 50 | Threads: 5
-
-🎯 Found [AWS, DB, API Keys] - http://site1.com/.env
-[SKIP] http://site2.com (Dead/Unreachable)
-🔍 No Credentials - http://site3.com
-```
-
-### Payment Scan Console
-```
-💳 Payment Keys Scanner
-📊 Targets: 30 | Threads: 5
-🔍 Scanning: 40+ Payment Gateways
-
-[FOUND] Keys at http://site1.com/.env
-[SCANNED] http://site2.com (No Keys Found)
-```
+A: Yes, but your IP will be exposed and you will get blocked quickly.
 
 ---
 
